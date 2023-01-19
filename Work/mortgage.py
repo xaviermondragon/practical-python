@@ -26,8 +26,8 @@ while principal > 0:
     principal -= monthly_payment
     total_paid += monthly_payment
 
-    print(months_required, total_paid, principal)
+    print(f'Months required: {months_required}, total paid: {total_paid}, principal: {principal}')
 
 
-print('Total paid', total_paid)
-print('Months required', months_required)
+print(f'Total paid: {total_paid}')
+print(f'Months required: {months_required}')
