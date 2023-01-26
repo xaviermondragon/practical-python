@@ -1,13 +1,24 @@
 # pcost.py
 #
 # Exercise 1.27
-total_cost = 0.0
+import csv
+import sys
 
-with open('Data/portfolio.csv', 'rt') as file:
-    next(file)
 
-    for line in file:
-        stock = line.split(',')
-        total_cost += int(stock[1]) * float(stock[2])
+def portfolio_cost(filename):
+    total_cost = 0.0
+    with open(filename, 'rt') as file:
+        rows = csv.reader(file)
+        next(rows)
+        for row in rows:
+            total_cost += int(row[1]) * float(row[2])
+    return total_cost
 
-print(f'Total cost: {total_cost}')
+
+if len(sys.argv) == 2:
+    filename = sys.argv[1]
+else:
+    filename = 'Data/portfolio.csv'
+
+cost = portfolio_cost(filename)
+print(f'Total cost: {cost}')
