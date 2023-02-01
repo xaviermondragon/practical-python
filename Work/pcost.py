@@ -5,13 +5,17 @@ import csv
 import sys
 
 
-def portfolio_cost(filename):
+def portfolio_cost(name_of_file):
+    """Computes the total cost (shares*price) of a portfolio file"""
     total_cost = 0.0
-    with open(filename, 'rt') as file:
+
+    with open(name_of_file, 'rt') as file:
         rows = csv.reader(file)
         next(rows)
         for row in rows:
-            total_cost += int(row[1]) * float(row[2])
+            number_of_shares = int(row[1])
+            price = float(row[2])
+            total_cost += number_of_shares * price
     return total_cost
 
 
