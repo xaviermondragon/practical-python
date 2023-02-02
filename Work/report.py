@@ -56,7 +56,7 @@ headers = ('Name', 'Shares', 'Price', 'Change')
 print(f'{headers[0]:>10s} {headers[1]:>10s} {headers[2]:>10s} {headers[3]:>10s}')
 print(('-' * 10 + ' ') * len(headers))
 for name, shares, price, change in report:
-    print(f'{name:>10s} {shares:>10d} {price:>10.2f} {change:>10.2f}')
+    print(f'{name:>10s} {shares:>10d} {"${:.2f}".format(price):>10s} {change:>10.2f}')
 
 # Calculate the total cost of the portfolio
 #total_cost = 0.0
