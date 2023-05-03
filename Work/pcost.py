@@ -1,6 +1,6 @@
 # pcost.py
 #
-# Exercise 1.27
+# Exercise 2.16
 import csv
 import sys
 
@@ -11,11 +11,15 @@ def portfolio_cost(name_of_file):
 
     with open(name_of_file, 'rt') as file:
         rows = csv.reader(file)
-        next(rows)
-        for row in rows:
-            number_of_shares = int(row[1])
-            price = float(row[2])
-            total_cost += number_of_shares * price
+        headers = next(rows)
+        for row_number, row in enumerate(rows, start=1):
+            record = dict(zip(headers, row))
+            try:
+                number_of_shares = int(record['shares'])
+                price = float(record['price'])
+                total_cost += number_of_shares * price
+            except ValueError:
+                print(f'Row {row_number}: Couldn\'t convert: {row}')
     return total_cost
 
 
