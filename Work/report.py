@@ -1,43 +1,26 @@
 # report.py
-#
-# Exercise 2.4
-import csv
+
+import fileparse
 
 
 def read_portfolio(filename):
-    """Opens a given portfolio file and reads it into a dictionary"""
-    portfolio = []
-
-    with open(filename, 'rt') as file:
-        rows = csv.reader(file)
-        headers = next(rows)
-
-        for row in rows:
-            record = dict(zip(headers, row))
-            holding = {
-                 'name'   : record['name'],
-                 'shares' : int(record['shares']),
-                 'price'   : float(record['price'])
-            }
-            portfolio.append(holding)
-    return portfolio
+    """
+    Read a stock portfolio file into a list of dictionaries with keys name, shares, and price.
+    """
+    return fileparse.parse_csv(filename, types=[str, int, float])
 
 
 def read_prices(filename):
-    file = open(filename, 'r')
-    rows = csv.reader(file)
-    prices = {}
-
-    for row in rows:
-        try:
-            prices[row[0]] = float(row[1])
-        except IndexError:
-            pass
-
-    return prices
+    """
+    Read a CSV file of price data into a dict mapping names to prices.
+    """
+    return dict(fileparse.parse_csv(filename, types=[str, float], has_headers=False))
 
 
 def make_report(portfolio, prices):
+    """
+    Make a list of (name, shares, price, change) tuples given a portfolio list and prices dictionary.
+    """
     report = []
     for stock in portfolio:
         name = stock['name']
@@ -50,6 +33,9 @@ def make_report(portfolio, prices):
 
 
 def print_report(report):
+    """
+    Print a nicely formatted table from a list of (name, shares, price, change) tuples.
+    """
     headers = ('Name', 'Shares', 'Price', 'Change')
     print(f'{headers[0]:>10s} {headers[1]:>10s} {headers[2]:>10s} {headers[3]:>10s}')
     print(('-' * 10 + ' ') * len(headers))
@@ -58,10 +44,13 @@ def print_report(report):
 
 
 def portfolio_report(portfolio_filename, prices_filename):
+    """
+    Make a stock report given portfolio and price data files.
+    """
     portfolio = read_portfolio(portfolio_filename)
     prices = read_prices(prices_filename)
     report = make_report(portfolio, prices)
     print_report(report)
 
 
-#portfolio_report('Data/portfolio.csv', 'Data/prices.csv')
+# portfolio_report('Data/portfolio.csv', 'Data/prices.csv')
