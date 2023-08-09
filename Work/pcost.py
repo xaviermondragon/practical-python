@@ -15,5 +15,16 @@ if len(sys.argv) == 2:
 else:
     filename = 'Data/portfolio.csv'
 
-cost = portfolio_cost(filename)
-print(f'Total cost: {cost}')
+
+def main(args):
+    if len(args) != 2:
+        raise SystemExit('Usage: %s portfile pricefile' % args[0])
+    cost = portfolio_cost(filename)
+    print(f'Total cost: {cost}')
+
+
+if __name__ == '__main__':
+    import sys
+    main(sys.argv)
+
+# python3 pcost.py Data/portfolio.csv
