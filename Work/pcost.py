@@ -1,6 +1,5 @@
 # pcost.py
 
-import csv
 import sys
 import report
 
