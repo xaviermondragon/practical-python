@@ -45,10 +45,16 @@ class HTMLTableFormatter(TableFormatter):
     """
 
     def headings(self, headers):
-        print('<tr><th>' + '</th><th>'.join(headers) + '</th></tr>')
+        print('<tr>', end='')
+        for h in headers:
+            print(f'<th>{h}</th>', end='')
+        print('</tr>')
 
     def row(self, rowdata):
-        print('<tr><td>' + '</td><td>'.join(rowdata) + '</td></tr>')
+        print('<tr>', end='')
+        for d in rowdata:
+            print(f'<td>{d}</td>', end='')
+        print('</tr>')
 
 
 def create_formatter(format_name):
@@ -63,3 +69,10 @@ def create_formatter(format_name):
         return HTMLTableFormatter()
     else:
         raise RuntimeError(f'Unknown format {format_name}')
+
+
+def print_table(objects, columns, formatter):
+    formatter.headings(columns)
+    for obj in objects:
+        rowdata = [str(getattr(obj, column)) for column in columns]
+        formatter.row(rowdata)
