@@ -1,3 +1,5 @@
+# tableformat.py
+
 class TableFormatter:
     def headings(self, headers):
         """
@@ -57,6 +59,10 @@ class HTMLTableFormatter(TableFormatter):
         print('</tr>')
 
 
+class FormatError(Exception):
+    pass
+
+
 def create_formatter(format_name):
     """
     Create an appropriate formatter given an output format name
@@ -68,7 +74,7 @@ def create_formatter(format_name):
     elif format_name == 'html':
         return HTMLTableFormatter()
     else:
-        raise RuntimeError(f'Unknown format {format_name}')
+        raise FormatError(f'Unknown format {format_name}')
 
 
 def print_table(objects, columns, formatter):
