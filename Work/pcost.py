@@ -6,7 +6,8 @@ import report
 
 def portfolio_cost(filename):
     """Computes the total cost (shares*price) of a portfolio file"""
-    return sum([record.cost for record in report.read_portfolio(filename)])
+    portfolio = report.read_portfolio(filename)
+    return portfolio.total_cost
 
 
 if len(sys.argv) == 2:
