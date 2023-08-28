@@ -21,12 +21,6 @@ def make_dicts(rows, headers):
         yield dict(zip(headers, row))
 
 
-def filter_symbols(rows, names):
-    for row in rows:
-        if row['name'] in names:
-            yield row
-
-
 def parse_stock_data(lines):
     rows = csv.reader(lines)
     rows = select_columns(rows, [0, 1, 4])
@@ -38,7 +32,7 @@ def parse_stock_data(lines):
 def ticker(portfolio_file, log_file, format):
     portfolio = read_portfolio(portfolio_file)
     rows = parse_stock_data(follow(log_file))
-    rows = filter_symbols(rows, portfolio)
+    rows = (row for row in rows if row['name'] in portfolio)
     formatter = create_formatter(format)
     formatter.headings(['Name', 'Price', 'Change'])
     for row in rows:
