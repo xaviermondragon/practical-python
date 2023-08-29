@@ -6,13 +6,17 @@ import tableformat
 from portfolio import Portfolio
 
 
-def read_portfolio(filename):
+def read_portfolio(filename, **options):
     """
     Read a stock portfolio file into a list of dictionaries with keys name, shares, and price.
     """
     with open(filename) as lines:
-        portfolio_dictionaries = fileparse.parse_csv(lines, select=['name', 'shares', 'price'], types=[str, int, float])
-        portfolio = [Stock(d['name'], d['shares'], d['price']) for d in portfolio_dictionaries]
+        portfolio_dictionaries = fileparse.parse_csv(lines,
+                                                     select=['name', 'shares', 'price'],
+                                                     types=[str, int, float],
+                                                     **options
+                                                     )
+        portfolio = [Stock(**d) for d in portfolio_dictionaries]
         return Portfolio(portfolio)
 
 
